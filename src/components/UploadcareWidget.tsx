@@ -47,9 +47,15 @@ function loadUploadcareScript(): Promise<void> {
 export default function UploadcareWidget({ publicKey, onChange, clearable, imagesOnly, multiple }: UploadcareWidgetProps) {
     const widgetRef = useRef<HTMLInputElement>(null);
     const widgetInstanceRef = useRef<any>(null);
+    
+    console.log('[Widget] Component rendering with:', { multiple, imagesOnly, publicKey });
 
     useEffect(() => {
-        if (typeof window === 'undefined') return;
+        console.log('[Widget] useEffect triggered!');
+        if (typeof window === 'undefined') {
+            console.log('[Widget] Window is undefined, bailing');
+            return;
+        }
 
         const initWidget = async () => {
             console.log('[Widget] Starting initialization...');
