@@ -69,8 +69,8 @@ export default function AdminPage() {
         formData.set('size', fileSize || (editingApp ? editingApp.size : ''));
         formData.set('screenshots', JSON.stringify(screenshots));
 
-        console.log('Submitting with screenshots:', screenshots);
-        console.log('Screenshots JSON:', JSON.stringify(screenshots));
+        console.log('Submitting with screenshots state:', screenshots);
+        console.log('Screenshots JSON in FormData:', formData.get('screenshots'));
 
         if (editingApp) {
             formData.set('id', editingApp.id);
@@ -328,37 +328,24 @@ export default function AdminPage() {
                                         publicKey="1eab7359b521f25ceb5a"
                                         onChange={(info: any) => {
                                             console.log('Screenshot upload info:', info);
-                                            console.log('info.count:', info.count);
-                                            console.log('info.cdnUrl:', info.cdnUrl);
-                                            
-                                            // Handle multiple files
-                                            if (info.count && info.count > 1) {
-                                                // Multiple files selected
-                                                console.log('Multiple files detected');
-                                                const files = info.files();
-                                                console.log('Files:', files);
-                                                
-                                                const newUrls: string[] = [];
-                                                for (let i = 0; i < info.count; i++) {
-                                                    const file = files[i];
-                                                    console.log(`File ${i}:`, file);
-                                                    if (file && file.cdnUrl) {
-                                                        newUrls.push(file.cdnUrl);
+
+                                            if (info.count) {
+                                                // Multiple files (Group)
+                                                const groupUrl = info.cdnUrl;
+                                                if (groupUrl) {
+                                                    const newUrls: string[] = [];
+                                                    for (let i = 0; i < info.count; i++) {
+                                                        const baseUrl = groupUrl.endsWith('/') ? groupUrl : groupUrl + '/';
+                                                        newUrls.push(`${baseUrl}nth/${i}/`);
                                                     }
+                                                    console.log('Generated group URLs:', newUrls);
+                                                    setScreenshots(newUrls);
                                                 }
-                                                console.log('New URLs to add:', newUrls);
-                                                if (newUrls.length > 0) {
-                                                    const updated = [...screenshots, ...newUrls];
-                                                    console.log('Updated screenshots:', updated);
-                                                    setScreenshots(updated);
-                                                }
-                                            } else {
+                                            } else if (info.cdnUrl) {
                                                 // Single file
-                                                console.log('Single file detected');
-                                                if (info.cdnUrl && !screenshots.includes(info.cdnUrl)) {
-                                                    const updated = [...screenshots, info.cdnUrl];
-                                                    console.log('Updated screenshots:', updated);
-                                                    setScreenshots(updated);
+                                                console.log('Single file URL:', info.cdnUrl);
+                                                if (!screenshots.includes(info.cdnUrl)) {
+                                                    setScreenshots(prev => [...prev, info.cdnUrl]);
                                                 }
                                             }
                                         }}
@@ -367,6 +354,7 @@ export default function AdminPage() {
                                         multiple
                                     />
                                 </div>
+
                                 {screenshots.length > 0 && (
                                     <div className="space-y-3">
                                         <div className="text-sm text-green-400 flex items-center gap-2 font-bold">

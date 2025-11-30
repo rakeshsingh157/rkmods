@@ -15,6 +15,9 @@ export async function PUT(request: Request) {
         const screenshotsStr = formData.get('screenshots') as string;
         const screenshots = screenshotsStr ? JSON.parse(screenshotsStr) : [];
 
+        console.log('PUT /api/update-app - Raw screenshots string:', screenshotsStr);
+        console.log('PUT /api/update-app - Parsed screenshots:', screenshots);
+
         if (!id || !name) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }

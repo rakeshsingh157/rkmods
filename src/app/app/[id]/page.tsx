@@ -143,13 +143,13 @@ export default async function AppPage({ params }: { params: Promise<{ id: string
                                     </span>
                                 </h2>
                                 {/* Mobile: horizontal scroll, Desktop: grid */}
-                                <div className="md:hidden flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory -mx-6 px-6">
+                                <div className="md:hidden flex gap-4 overflow-x-auto pb-6 snap-x snap-mandatory -mx-6 px-6 scrollbar-hide">
                                     {app.screenshots.map((shot: string, i: number) => (
-                                        <div key={i} className="shrink-0 w-[85vw] snap-center">
-                                            <img 
-                                                src={shot} 
-                                                alt={`Screenshot ${i + 1}`} 
-                                                className="w-full h-auto rounded-2xl shadow-lg border border-white/10 object-cover" 
+                                        <div key={i} className="shrink-0 w-[95vw] snap-center">
+                                            <img
+                                                src={shot}
+                                                alt={`Screenshot ${i + 1}`}
+                                                className="w-full h-auto rounded-2xl shadow-lg border border-white/10 object-cover"
                                             />
                                         </div>
                                     ))}
@@ -158,10 +158,10 @@ export default async function AppPage({ params }: { params: Promise<{ id: string
                                 <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-4">
                                     {app.screenshots.map((shot: string, i: number) => (
                                         <div key={i} className="group cursor-pointer overflow-hidden rounded-2xl border border-white/10 hover:border-cyan-500/30 transition shadow-lg hover:shadow-cyan-500/10">
-                                            <img 
-                                                src={shot} 
-                                                alt={`Screenshot ${i + 1}`} 
-                                                className="w-full h-auto object-cover group-hover:scale-105 transition duration-300" 
+                                            <img
+                                                src={shot}
+                                                alt={`Screenshot ${i + 1}`}
+                                                className="w-full h-auto object-cover group-hover:scale-105 transition duration-300"
                                             />
                                         </div>
                                     ))}
