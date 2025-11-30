@@ -16,7 +16,13 @@ let uploadcareScriptLoaded = false;
 export default function UploadcareWidget({ publicKey, onChange, clearable, imagesOnly, multiple }: UploadcareWidgetProps) {
     const widgetRef = useRef<HTMLInputElement>(null);
     const widgetInstanceRef = useRef<any>(null);
+    const onChangeRef = useRef(onChange);
     const [isReady, setIsReady] = useState(false);
+
+    // Keep onChange ref updated
+    useEffect(() => {
+        onChangeRef.current = onChange;
+    }, [onChange]);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -24,11 +30,14 @@ export default function UploadcareWidget({ publicKey, onChange, clearable, image
         const initWidget = () => {
             if (widgetRef.current && (window as any).uploadcare && !widgetInstanceRef.current) {
                 try {
+                    console.log('Initializing Uploadcare widget...');
                     widgetInstanceRef.current = (window as any).uploadcare.Widget(widgetRef.current);
                     widgetInstanceRef.current.onUploadComplete((info: any) => {
-                        onChange(info);
+                        console.log('Upload complete fired:', info);
+                        onChangeRef.current(info);
                     });
                     setIsReady(true);
+                    console.log('Widget initialized successfully');
                 } catch (error) {
                     console.error('Error initializing Uploadcare widget:', error);
                 }
