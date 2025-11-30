@@ -16,7 +16,16 @@ export async function GET() {
         // Get apps count
         let appsCount = 0;
         let apps = [];
+        let columns = [];
         try {
+            // Get column info
+            const columnsQuery = await pool.query(`
+                SELECT column_name, data_type 
+                FROM information_schema.columns 
+                WHERE table_name = 'apps'
+            `);
+            columns = columnsQuery.rows;
+            
             const appsQuery = await pool.query('SELECT COUNT(*) as count FROM apps');
             appsCount = parseInt(appsQuery.rows[0].count);
             
@@ -30,6 +39,7 @@ export async function GET() {
             status: 'connected',
             timestamp: testQuery.rows[0].now,
             tables: tablesQuery.rows.map(r => r.table_name),
+            appsTableColumns: columns,
             appsCount,
             recentApps: apps
         });
