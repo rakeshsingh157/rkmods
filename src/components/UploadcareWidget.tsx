@@ -52,25 +52,42 @@ export default function UploadcareWidget({ publicKey, onChange, clearable, image
         if (typeof window === 'undefined') return;
 
         const initWidget = async () => {
+            console.log('[Widget] Starting initialization...');
             await loadUploadcareScript();
+            console.log('[Widget] Script loaded, window.uploadcare:', typeof (window as any).uploadcare);
             
             if (widgetRef.current && !widgetInstanceRef.current) {
-                console.log('Initializing widget for:', { multiple, imagesOnly });
-                const widget = (window as any).uploadcare.Widget(widgetRef.current);
+                console.log('[Widget] Initializing for:', { multiple, imagesOnly, publicKey });
+                console.log('[Widget] Widget ref element:', widgetRef.current);
                 
-                widget.onUploadComplete((info: any) => {
-                    console.log('onUploadComplete triggered:', info);
-                    onChange(info);
-                });
-                
-                widgetInstanceRef.current = widget;
-                console.log('Widget ready');
+                try {
+                    const widget = (window as any).uploadcare.Widget(widgetRef.current);
+                    console.log('[Widget] Widget created:', widget);
+                    
+                    widget.onUploadComplete((info: any) => {
+                        console.log('[Widget] ===== UPLOAD COMPLETE =====');
+                        console.log('[Widget] Info object:', info);
+                        console.log('[Widget] Info.count:', info.count);
+                        console.log('[Widget] Info.cdnUrl:', info.cdnUrl);
+                        console.log('[Widget] Calling onChange callback...');
+                        onChange(info);
+                        console.log('[Widget] onChange called');
+                    });
+                    
+                    widgetInstanceRef.current = widget;
+                    console.log('[Widget] Widget ready and listening');
+                } catch (error) {
+                    console.error('[Widget] Error during initialization:', error);
+                }
+            } else {
+                console.log('[Widget] Skipping init - widgetRef:', widgetRef.current, 'instance:', widgetInstanceRef.current);
             }
         };
 
         initWidget();
 
         return () => {
+            console.log('[Widget] Cleanup');
             if (widgetInstanceRef.current) {
                 widgetInstanceRef.current = null;
             }
