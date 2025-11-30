@@ -327,23 +327,38 @@ export default function AdminPage() {
                                     <UploadcareWidget
                                         publicKey="1eab7359b521f25ceb5a"
                                         onChange={(info: any) => {
+                                            console.log('Screenshot upload info:', info);
+                                            console.log('info.count:', info.count);
+                                            console.log('info.cdnUrl:', info.cdnUrl);
+                                            
                                             // Handle multiple files
                                             if (info.count && info.count > 1) {
                                                 // Multiple files selected
+                                                console.log('Multiple files detected');
+                                                const files = info.files();
+                                                console.log('Files:', files);
+                                                
                                                 const newUrls: string[] = [];
                                                 for (let i = 0; i < info.count; i++) {
-                                                    const file = info.files()[i];
-                                                    if (file && file.cdnUrl && !screenshots.includes(file.cdnUrl)) {
+                                                    const file = files[i];
+                                                    console.log(`File ${i}:`, file);
+                                                    if (file && file.cdnUrl) {
                                                         newUrls.push(file.cdnUrl);
                                                     }
                                                 }
+                                                console.log('New URLs to add:', newUrls);
                                                 if (newUrls.length > 0) {
-                                                    setScreenshots([...screenshots, ...newUrls]);
+                                                    const updated = [...screenshots, ...newUrls];
+                                                    console.log('Updated screenshots:', updated);
+                                                    setScreenshots(updated);
                                                 }
                                             } else {
                                                 // Single file
+                                                console.log('Single file detected');
                                                 if (info.cdnUrl && !screenshots.includes(info.cdnUrl)) {
-                                                    setScreenshots([...screenshots, info.cdnUrl]);
+                                                    const updated = [...screenshots, info.cdnUrl];
+                                                    console.log('Updated screenshots:', updated);
+                                                    setScreenshots(updated);
                                                 }
                                             }
                                         }}
