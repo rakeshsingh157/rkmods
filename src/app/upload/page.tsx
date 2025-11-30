@@ -259,7 +259,7 @@ export default function AdminPage() {
                                         {/* @ts-ignore */}
                                         <Widget
                                             publicKey="1eab7359b521f25ceb5a"
-                                            onChange={(info) => setIconUrl(info.cdnUrl || '')}
+                                            onChange={(info: any) => setIconUrl(info.cdnUrl || '')}
                                             clearable
                                             imagesOnly
                                         />
