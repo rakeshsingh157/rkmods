@@ -69,6 +69,9 @@ export default function AdminPage() {
         formData.set('size', fileSize || (editingApp ? editingApp.size : ''));
         formData.set('screenshots', JSON.stringify(screenshots));
 
+        console.log('Submitting with screenshots:', screenshots);
+        console.log('Screenshots JSON:', JSON.stringify(screenshots));
+
         if (editingApp) {
             formData.set('id', editingApp.id);
         }
