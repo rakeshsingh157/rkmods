@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import { Upload, AlertCircle, CheckCircle, Shield, Lock, Edit, Trash2, X, Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { Widget } from '@uploadcare/react-widget';
+// @ts-ignore
+import { Widget } from 'uploadcare-widget';
 import UploadModal from '@/components/UploadModal';
 
 export default function AdminPage() {
