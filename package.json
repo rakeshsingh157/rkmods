@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@uploadcare/react-widget": "^3.21.2",
     "dotenv": "^16.4.5",
     "lucide-react": "^0.555.0",
     "next": "14.2.15",
