@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface UploadcareWidgetProps {
     publicKey: string;
@@ -12,75 +12,67 @@ interface UploadcareWidgetProps {
 
 // Track if script is already loaded globally
 let uploadcareScriptLoaded = false;
+let uploadcareScriptPromise: Promise<void> | null = null;
+
+function loadUploadcareScript(): Promise<void> {
+    if (uploadcareScriptPromise) {
+        return uploadcareScriptPromise;
+    }
+
+    if ((window as any).uploadcare) {
+        return Promise.resolve();
+    }
+
+    uploadcareScriptPromise = new Promise((resolve) => {
+        const link = document.createElement('link');
+        link.href = 'https://ucarecdn.com/libs/widget/3.x/uploadcare.min.css';
+        link.rel = 'stylesheet';
+        
+        const script = document.createElement('script');
+        script.src = 'https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js';
+        script.charset = 'utf-8';
+        
+        script.onload = () => {
+            console.log('Uploadcare script loaded globally');
+            resolve();
+        };
+
+        document.head.appendChild(link);
+        document.head.appendChild(script);
+    });
+
+    return uploadcareScriptPromise;
+}
 
 export default function UploadcareWidget({ publicKey, onChange, clearable, imagesOnly, multiple }: UploadcareWidgetProps) {
     const widgetRef = useRef<HTMLInputElement>(null);
     const widgetInstanceRef = useRef<any>(null);
-    const onChangeRef = useRef(onChange);
-    const [isReady, setIsReady] = useState(false);
-
-    // Keep onChange ref updated
-    useEffect(() => {
-        onChangeRef.current = onChange;
-    }, [onChange]);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
 
-        const initWidget = () => {
-            if (widgetRef.current && (window as any).uploadcare && !widgetInstanceRef.current) {
-                try {
-                    console.log('Initializing Uploadcare widget...');
-                    widgetInstanceRef.current = (window as any).uploadcare.Widget(widgetRef.current);
-                    widgetInstanceRef.current.onUploadComplete((info: any) => {
-                        console.log('Upload complete fired:', info);
-                        onChangeRef.current(info);
-                    });
-                    setIsReady(true);
-                    console.log('Widget initialized successfully');
-                } catch (error) {
-                    console.error('Error initializing Uploadcare widget:', error);
-                }
+        const initWidget = async () => {
+            await loadUploadcareScript();
+            
+            if (widgetRef.current && !widgetInstanceRef.current) {
+                console.log('Initializing widget for:', { multiple, imagesOnly });
+                const widget = (window as any).uploadcare.Widget(widgetRef.current);
+                
+                widget.onUploadComplete((info: any) => {
+                    console.log('onUploadComplete triggered:', info);
+                    onChange(info);
+                });
+                
+                widgetInstanceRef.current = widget;
+                console.log('Widget ready');
             }
         };
 
-        if ((window as any).uploadcare) {
-            // Already loaded
-            initWidget();
-        } else if (!uploadcareScriptLoaded) {
-            // Load script only once
-            uploadcareScriptLoaded = true;
-            
-            const link = document.createElement('link');
-            link.href = 'https://ucarecdn.com/libs/widget/3.x/uploadcare.min.css';
-            link.rel = 'stylesheet';
-            link.id = 'uploadcare-css';
-            
-            const script = document.createElement('script');
-            script.src = 'https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js';
-            script.charset = 'utf-8';
-            script.id = 'uploadcare-script';
-            
-            script.onload = () => {
-                initWidget();
-            };
-
-            if (!document.getElementById('uploadcare-css')) {
-                document.head.appendChild(link);
-            }
-            if (!document.getElementById('uploadcare-script')) {
-                document.head.appendChild(script);
-            }
-        }
+        initWidget();
 
         return () => {
-            // Cleanup widget instance only
             if (widgetInstanceRef.current) {
-                try {
-                    widgetInstanceRef.current = null;
-                } catch (error) {
-                    console.error('Error cleaning up widget:', error);
-                }
+                widgetInstanceRef.current = null;
             }
         };
     }, []);
