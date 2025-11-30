@@ -1,5 +1,5 @@
 
-const API_KEY = '397121wy5ozqjf8tuqzgf';
+const API_KEY = process.env.DEVUPLOADS_KEY;
 
 export async function getUploadServer() {
     const res = await fetch(`https://devuploads.com/api/upload/server?key=${API_KEY}`);
