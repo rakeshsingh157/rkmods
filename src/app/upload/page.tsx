@@ -316,7 +316,10 @@ export default function AdminPage() {
 
                             {/* Screenshots Section */}
                             <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 hover:bg-white/5 transition relative group">
-                                <label className="block text-sm font-bold text-gray-400 mb-4 uppercase tracking-wide">Screenshots (Optional)</label>
+                                <div className="flex items-center justify-between mb-4">
+                                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-wide">Screenshots (Optional)</label>
+                                    <span className="text-xs text-gray-500 font-medium">Click upload multiple times to add more</span>
+                                </div>
                                 <div className="uploadcare-wrapper mb-4">
                                     <UploadcareWidget
                                         publicKey="1eab7359b521f25ceb5a"
@@ -341,13 +344,24 @@ export default function AdminPage() {
                                                     <button
                                                         type="button"
                                                         onClick={() => setScreenshots(screenshots.filter((_, i) => i !== index))}
-                                                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover/img:opacity-100 transition hover:bg-red-600"
+                                                        className="absolute top-1 right-1 bg-red-500 text-white p-1.5 rounded-full opacity-0 group-hover/img:opacity-100 transition hover:bg-red-600"
+                                                        title="Remove screenshot"
                                                     >
                                                         <X className="w-3 h-3" />
                                                     </button>
+                                                    <div className="absolute bottom-1 left-1 bg-black/60 text-white text-xs px-2 py-0.5 rounded">
+                                                        {index + 1}
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => setScreenshots([])}
+                                            className="text-xs text-red-400 hover:text-red-300 underline"
+                                        >
+                                            Clear all screenshots
+                                        </button>
                                     </div>
                                 )}
                             </div>
