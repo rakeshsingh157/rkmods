@@ -7,12 +7,13 @@ interface UploadcareWidgetProps {
     onChange: (info: any) => void;
     clearable?: boolean;
     imagesOnly?: boolean;
+    multiple?: boolean;
 }
 
 // Track if script is already loaded globally
 let uploadcareScriptLoaded = false;
 
-export default function UploadcareWidget({ publicKey, onChange, clearable, imagesOnly }: UploadcareWidgetProps) {
+export default function UploadcareWidget({ publicKey, onChange, clearable, imagesOnly, multiple }: UploadcareWidgetProps) {
     const widgetRef = useRef<HTMLInputElement>(null);
     const widgetInstanceRef = useRef<any>(null);
     const [isReady, setIsReady] = useState(false);
@@ -83,6 +84,8 @@ export default function UploadcareWidget({ publicKey, onChange, clearable, image
             data-public-key={publicKey}
             data-clearable={clearable ? 'true' : 'false'}
             data-images-only={imagesOnly ? 'true' : 'false'}
+            data-multiple={multiple ? 'true' : 'false'}
+            data-multiple-max={multiple ? '10' : undefined}
         />
     );
 }

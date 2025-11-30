@@ -318,18 +318,35 @@ export default function AdminPage() {
                             <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 hover:bg-white/5 transition relative group">
                                 <div className="flex items-center justify-between mb-4">
                                     <label className="block text-sm font-bold text-gray-400 uppercase tracking-wide">Screenshots (Optional)</label>
-                                    <span className="text-xs text-gray-500 font-medium">Click upload multiple times to add more</span>
+                                    <span className="text-xs text-gray-500 font-medium">Select multiple images at once (up to 10)</span>
                                 </div>
                                 <div className="uploadcare-wrapper mb-4">
                                     <UploadcareWidget
                                         publicKey="1eab7359b521f25ceb5a"
                                         onChange={(info: any) => {
-                                            if (info.cdnUrl && !screenshots.includes(info.cdnUrl)) {
-                                                setScreenshots([...screenshots, info.cdnUrl]);
+                                            // Handle multiple files
+                                            if (info.count && info.count > 1) {
+                                                // Multiple files selected
+                                                const newUrls: string[] = [];
+                                                for (let i = 0; i < info.count; i++) {
+                                                    const file = info.files()[i];
+                                                    if (file && file.cdnUrl && !screenshots.includes(file.cdnUrl)) {
+                                                        newUrls.push(file.cdnUrl);
+                                                    }
+                                                }
+                                                if (newUrls.length > 0) {
+                                                    setScreenshots([...screenshots, ...newUrls]);
+                                                }
+                                            } else {
+                                                // Single file
+                                                if (info.cdnUrl && !screenshots.includes(info.cdnUrl)) {
+                                                    setScreenshots([...screenshots, info.cdnUrl]);
+                                                }
                                             }
                                         }}
                                         clearable
                                         imagesOnly
+                                        multiple
                                     />
                                 </div>
                                 {screenshots.length > 0 && (
