@@ -11,8 +11,9 @@ export async function PUT(request: Request) {
         const version = formData.get('version') as string;
         const fileUrl = formData.get('fileUrl') as string;
         const iconUrl = formData.get('iconUrl') as string;
-
         const size = formData.get('size') as string;
+        const screenshotsStr = formData.get('screenshots') as string;
+        const screenshots = screenshotsStr ? JSON.parse(screenshotsStr) : [];
 
         if (!id || !name) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -21,11 +22,11 @@ export async function PUT(request: Request) {
         // Update DB
         const query = `
       UPDATE apps 
-      SET name = $1, description = $2, category = $3, version = $4, file_url = $5, icon_url = $6, size = $7
-      WHERE id = $8
+      SET name = $1, description = $2, category = $3, version = $4, file_url = $5, icon_url = $6, size = $7, screenshots = $8
+      WHERE id = $9
       RETURNING *
     `;
-        const values = [name, description, category, version, fileUrl, iconUrl, size, id];
+        const values = [name, description, category, version, fileUrl, iconUrl, size, screenshots, id];
         const result = await pool.query(query, values);
 
         if (result.rows.length === 0) {

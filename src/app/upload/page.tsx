@@ -14,6 +14,7 @@ export default function AdminPage() {
     const [fileUrl, setFileUrl] = useState('');
     const [fileSize, setFileSize] = useState('');
     const [iconUrl, setIconUrl] = useState('');
+    const [screenshots, setScreenshots] = useState<string[]>([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [accessCode, setAccessCode] = useState('');
 
@@ -66,6 +67,7 @@ export default function AdminPage() {
         formData.set('fileUrl', fileUrl || (editingApp ? editingApp.file_url : ''));
         formData.set('iconUrl', iconUrl || (editingApp ? editingApp.icon_url : ''));
         formData.set('size', fileSize || (editingApp ? editingApp.size : ''));
+        formData.set('screenshots', JSON.stringify(screenshots));
 
         if (editingApp) {
             formData.set('id', editingApp.id);
@@ -106,6 +108,7 @@ export default function AdminPage() {
         setFileUrl(app.file_url);
         setFileSize(app.size);
         setIconUrl(app.icon_url);
+        setScreenshots(app.screenshots || []);
         setActiveTab('upload');
     }
 
@@ -309,6 +312,44 @@ export default function AdminPage() {
                                     <input type="hidden" name="iconUrl" value={iconUrl} />
                                     {(fileUrl || editingApp?.file_url) && <div className="mt-4 text-sm text-green-400 flex items-center justify-center gap-2 font-bold"><CheckCircle className="w-4 h-4" /> {isDirectLink ? 'Link Set' : `APK Set ${fileSize ? `(${fileSize})` : ''}`}</div>}
                                 </div>
+                            </div>
+
+                            {/* Screenshots Section */}
+                            <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 hover:bg-white/5 transition relative group">
+                                <label className="block text-sm font-bold text-gray-400 mb-4 uppercase tracking-wide">Screenshots (Optional)</label>
+                                <div className="uploadcare-wrapper mb-4">
+                                    <UploadcareWidget
+                                        publicKey="1eab7359b521f25ceb5a"
+                                        onChange={(info: any) => {
+                                            if (info.cdnUrl && !screenshots.includes(info.cdnUrl)) {
+                                                setScreenshots([...screenshots, info.cdnUrl]);
+                                            }
+                                        }}
+                                        clearable
+                                        imagesOnly
+                                    />
+                                </div>
+                                {screenshots.length > 0 && (
+                                    <div className="space-y-3">
+                                        <div className="text-sm text-green-400 flex items-center gap-2 font-bold">
+                                            <CheckCircle className="w-4 h-4" /> {screenshots.length} Screenshot{screenshots.length > 1 ? 's' : ''} Added
+                                        </div>
+                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                            {screenshots.map((url, index) => (
+                                                <div key={index} className="relative group/img">
+                                                    <img src={url} alt={`Screenshot ${index + 1}`} className="w-full h-24 object-cover rounded-lg border border-white/10" />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setScreenshots(screenshots.filter((_, i) => i !== index))}
+                                                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover/img:opacity-100 transition hover:bg-red-600"
+                                                    >
+                                                        <X className="w-3 h-3" />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <button

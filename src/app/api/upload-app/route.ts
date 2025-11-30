@@ -10,8 +10,9 @@ export async function POST(request: Request) {
         const version = formData.get('version') as string;
         const fileUrl = formData.get('fileUrl') as string;
         const iconUrl = formData.get('iconUrl') as string;
-
         const size = formData.get('size') as string;
+        const screenshotsStr = formData.get('screenshots') as string;
+        const screenshots = screenshotsStr ? JSON.parse(screenshotsStr) : [];
 
         if (!fileUrl || !name) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -19,11 +20,11 @@ export async function POST(request: Request) {
 
         // Save to DB
         const query = `
-      INSERT INTO apps (name, description, category, version, file_url, icon_url, size)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      INSERT INTO apps (name, description, category, version, file_url, icon_url, size, screenshots)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       RETURNING *
     `;
-        const values = [name, description, category, version, fileUrl, iconUrl, size];
+        const values = [name, description, category, version, fileUrl, iconUrl, size, screenshots];
         const result = await pool.query(query, values);
 
         return NextResponse.json({ success: true, app: result.rows[0] });
