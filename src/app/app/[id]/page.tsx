@@ -134,16 +134,40 @@ export default async function AppPage({ params }: { params: Promise<{ id: string
                     <div className="lg:col-span-2 space-y-12">
 
                         {/* Screenshots */}
-                        {app.screenshots && app.screenshots.length > 0 ? (
+                        {app.screenshots && app.screenshots.length > 0 && (
                             <section>
-                                <h2 className="text-2xl font-bold text-white mb-6">Screenshots</h2>
-                                <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                                    Screenshots
+                                    <span className="bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full text-xs font-bold border border-cyan-500/20">
+                                        {app.screenshots.length}
+                                    </span>
+                                </h2>
+                                {/* Mobile: horizontal scroll, Desktop: grid */}
+                                <div className="md:hidden flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory -mx-6 px-6">
                                     {app.screenshots.map((shot: string, i: number) => (
-                                        <img key={i} src={shot} alt={`Screenshot ${i + 1}`} className="w-64 h-auto rounded-2xl shadow-lg border border-white/10" />
+                                        <div key={i} className="shrink-0 w-[85vw] snap-center">
+                                            <img 
+                                                src={shot} 
+                                                alt={`Screenshot ${i + 1}`} 
+                                                className="w-full h-auto rounded-2xl shadow-lg border border-white/10 object-cover" 
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                                {/* Desktop: responsive grid */}
+                                <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {app.screenshots.map((shot: string, i: number) => (
+                                        <div key={i} className="group cursor-pointer overflow-hidden rounded-2xl border border-white/10 hover:border-cyan-500/30 transition shadow-lg hover:shadow-cyan-500/10">
+                                            <img 
+                                                src={shot} 
+                                                alt={`Screenshot ${i + 1}`} 
+                                                className="w-full h-auto object-cover group-hover:scale-105 transition duration-300" 
+                                            />
+                                        </div>
                                     ))}
                                 </div>
                             </section>
-                        ) : null}
+                        )}
 
                         {/* Description */}
                         <section>
@@ -219,7 +243,7 @@ export default async function AppPage({ params }: { params: Promise<{ id: string
                             <div className="space-y-4">
                                 {relatedApps.map((related: any) => (
                                     <Link key={related.id} href={`/app/${related.id}`} className="flex items-center gap-4 bg-[#131b2e] p-4 rounded-2xl border border-white/5 hover:border-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/5 transition group">
-                                        <div className="w-14 h-14 rounded-xl bg-[#0b0f19] flex-shrink-0 overflow-hidden border border-white/5">
+                                        <div className="w-14 h-14 rounded-xl bg-background shrink-0 overflow-hidden border border-white/5">
                                             {related.icon_url ? (
                                                 <img src={related.icon_url} alt={related.name} className="w-full h-full object-cover" />
                                             ) : (
