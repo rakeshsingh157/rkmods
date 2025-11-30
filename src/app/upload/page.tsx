@@ -4,14 +4,8 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import { Upload, AlertCircle, CheckCircle, Shield, Lock, Edit, Trash2, X, Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
 import UploadModal from '@/components/UploadModal';
-
-// @ts-ignore
-const Widget = dynamic(() => import('uploadcare-widget').then(mod => mod.Widget), {
-    ssr: false,
-    loading: () => <div className="text-gray-400 text-sm">Loading uploader...</div>
-});
+import UploadcareWidget from '@/components/UploadcareWidget';
 
 export default function AdminPage() {
     const router = useRouter();
@@ -261,8 +255,7 @@ export default function AdminPage() {
                                 <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 text-center hover:bg-white/5 transition relative group">
                                     <label className="block text-sm font-bold text-gray-400 mb-4 uppercase tracking-wide">App Icon</label>
                                     <div className="uploadcare-wrapper">
-                                        {/* @ts-ignore */}
-                                        <Widget
+                                        <UploadcareWidget
                                             publicKey="1eab7359b521f25ceb5a"
                                             onChange={(info: any) => setIconUrl(info.cdnUrl || '')}
                                             clearable
