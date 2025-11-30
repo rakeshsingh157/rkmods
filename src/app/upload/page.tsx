@@ -4,9 +4,14 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import { Upload, AlertCircle, CheckCircle, Shield, Lock, Edit, Trash2, X, Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-// @ts-ignore
-import { Widget } from 'uploadcare-widget';
+import dynamic from 'next/dynamic';
 import UploadModal from '@/components/UploadModal';
+
+// @ts-ignore
+const Widget = dynamic(() => import('uploadcare-widget').then(mod => mod.Widget), {
+    ssr: false,
+    loading: () => <div className="text-gray-400 text-sm">Loading uploader...</div>
+});
 
 export default function AdminPage() {
     const router = useRouter();
