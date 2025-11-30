@@ -64,14 +64,28 @@ export default function UploadcareWidget({ publicKey, onChange, clearable, image
                     const widget = (window as any).uploadcare.Widget(widgetRef.current);
                     console.log('[Widget] Widget created:', widget);
                     
+                    // Try both onChange and onUploadComplete
+                    widget.onChange((file: any) => {
+                        console.log('[Widget] ===== onChange FIRED =====');
+                        console.log('[Widget] File object:', file);
+                        
+                        if (file) {
+                            file.done((info: any) => {
+                                console.log('[Widget] ===== FILE DONE =====');
+                                console.log('[Widget] Info object:', info);
+                                console.log('[Widget] Info.count:', info.count);
+                                console.log('[Widget] Info.cdnUrl:', info.cdnUrl);
+                                console.log('[Widget] Calling onChange callback...');
+                                onChange(info);
+                                console.log('[Widget] onChange called');
+                            });
+                        }
+                    });
+                    
                     widget.onUploadComplete((info: any) => {
-                        console.log('[Widget] ===== UPLOAD COMPLETE =====');
+                        console.log('[Widget] ===== onUploadComplete FIRED =====');
                         console.log('[Widget] Info object:', info);
-                        console.log('[Widget] Info.count:', info.count);
-                        console.log('[Widget] Info.cdnUrl:', info.cdnUrl);
-                        console.log('[Widget] Calling onChange callback...');
                         onChange(info);
-                        console.log('[Widget] onChange called');
                     });
                     
                     widgetInstanceRef.current = widget;
