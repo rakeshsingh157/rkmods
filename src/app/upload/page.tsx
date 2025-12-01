@@ -161,7 +161,7 @@ export default function AdminPage() {
 
     if (!isAuthenticated) {
         return (
-            <main className="min-h-screen bg-[#0b0f19] flex items-center justify-center font-sans selection:bg-cyan-500 selection:text-white">
+            <main className="min-h-screen flex items-center justify-center font-sans selection:bg-cyan-500 selection:text-white">
                 <Navbar />
                 <div className="bg-[#131b2e] p-8 rounded-3xl shadow-2xl border border-white/5 max-w-md w-full mx-4 mt-20 relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
@@ -210,11 +210,11 @@ export default function AdminPage() {
     }
 
     return (
-        <main className="min-h-screen bg-[#0b0f19] font-sans selection:bg-cyan-500 selection:text-white relative overflow-hidden">
-            {/* Animated Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/5 animate-pulse"></div>
+        <main className="min-h-screen font-sans selection:bg-cyan-500 selection:text-white relative overflow-hidden">
+            {/* Enhanced Animated Background Elements */}
             <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
             
             <Navbar />
             <div className="container mx-auto py-24 md:py-32 px-4 max-w-5xl relative z-10">

@@ -49,7 +49,7 @@ export default async function AppPage({ params }: { params: Promise<{ id: string
 
     if (!app) {
         return (
-            <main className="min-h-screen bg-[#0b0f19] text-white">
+            <main className="min-h-screen text-white">
                 <Navbar />
                 <div className="container mx-auto py-32 text-center">
                     <h1 className="text-3xl font-bold text-gray-200">App not found</h1>
@@ -67,7 +67,7 @@ export default async function AppPage({ params }: { params: Promise<{ id: string
         : 'New';
 
     return (
-        <main className="min-h-screen bg-[#0b0f19] font-sans text-gray-200 selection:bg-cyan-500 selection:text-white">
+        <main className="min-h-screen font-sans text-gray-200 selection:bg-cyan-500 selection:text-white">
             <Navbar />
 
             {/* Header / Banner */}

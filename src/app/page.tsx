@@ -32,7 +32,7 @@ export default async function Home() {
   const stats = await getStats();
 
   return (
-    <main className="min-h-screen bg-[#0b0f19] font-sans selection:bg-cyan-500 selection:text-white">
+    <main className="min-h-screen font-sans selection:bg-cyan-500 selection:text-white">
       <Navbar />
 
       {/* Hero Section */}

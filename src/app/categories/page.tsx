@@ -12,7 +12,7 @@ const categories = [
 
 export default function CategoriesPage() {
     return (
-        <main className="min-h-screen bg-[#0b0f19] font-sans flex flex-col selection:bg-cyan-500 selection:text-white">
+        <main className="min-h-screen font-sans flex flex-col selection:bg-cyan-500 selection:text-white">
             <Navbar />
 
             <div className="relative pt-32 pb-12 border-b border-white/5">
