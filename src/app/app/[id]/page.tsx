@@ -8,6 +8,7 @@ import ShareButton from '@/components/ShareButton';
 import ScreenshotGallery from '@/components/ScreenshotGallery';
 import InstallationGuide from '@/components/InstallationGuide';
 import RatingBreakdown from '@/components/RatingBreakdown';
+import DynamicBackground from '@/components/DynamicBackground';
 
 async function getApp(id: string) {
     try {
@@ -72,8 +73,7 @@ export default async function AppPage({ params }: { params: Promise<{ id: string
     return (
         <main className="min-h-screen font-sans text-gray-200 selection:bg-cyan-500 selection:text-white relative overflow-hidden">
             {/* Animated Background Elements */}
-            <div className="absolute top-20 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-20 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse [animation-delay:1.5s]"></div>
+            {app.icon_url && <DynamicBackground iconUrl={app.icon_url} />}
             
             <Navbar />
 
