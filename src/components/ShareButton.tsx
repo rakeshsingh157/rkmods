@@ -35,7 +35,7 @@ export default function ShareButton({ appName }: { appName: string }) {
     return (
         <button
             onClick={handleShare}
-            className="inline-flex items-center justify-center gap-2 bg-white/5 text-white px-6 py-4 rounded-xl font-bold hover:bg-white/10 transition border border-white/10 min-w-[120px]"
+            className="inline-flex items-center justify-center gap-2 bg-white/5 text-white px-6 py-3 rounded-lg font-semibold text-sm md:text-base hover:bg-white/10 transition border border-white/10"
         >
             {copied ? (
                 <>

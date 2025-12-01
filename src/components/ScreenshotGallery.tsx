@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ScreenshotGalleryProps {
@@ -72,46 +73,45 @@ export default function ScreenshotGallery({ screenshots }: ScreenshotGalleryProp
             </div>
 
             {/* Lightbox Modal */}
-            {
-                selectedImage && (
-                    <div
-                        className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200"
+            {selectedImage && createPortal(
+                <div
+                    className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200"
+                    onClick={closeLightbox}
+                >
+                    <button
                         onClick={closeLightbox}
+                        className="absolute top-4 right-4 text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/10 transition z-50"
                     >
-                        <button
-                            onClick={closeLightbox}
-                            className="absolute top-4 right-4 text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/10 transition z-50"
-                        >
-                            <X className="w-8 h-8" />
-                        </button>
+                        <X className="w-8 h-8" />
+                    </button>
 
-                        <button
-                            onClick={prevImage}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/10 transition hidden md:block"
-                        >
-                            <ChevronLeft className="w-8 h-8" />
-                        </button>
+                    <button
+                        onClick={prevImage}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/10 transition hidden md:block"
+                    >
+                        <ChevronLeft className="w-8 h-8" />
+                    </button>
 
-                        <button
-                            onClick={nextImage}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/10 transition hidden md:block"
-                        >
-                            <ChevronRight className="w-8 h-8" />
-                        </button>
+                    <button
+                        onClick={nextImage}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/10 transition hidden md:block"
+                    >
+                        <ChevronRight className="w-8 h-8" />
+                    </button>
 
-                        <img
-                            src={selectedImage}
-                            alt="Full screen view"
-                            className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-                            onClick={(e) => e.stopPropagation()}
-                        />
+                    <img
+                        src={selectedImage}
+                        alt="Full screen view"
+                        className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                        onClick={(e) => e.stopPropagation()}
+                    />
 
-                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-gray-400 text-sm font-medium bg-black/50 px-3 py-1 rounded-full border border-white/10">
-                            {currentIndex + 1} / {screenshots.length}
-                        </div>
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-gray-400 text-sm font-medium bg-black/50 px-3 py-1 rounded-full border border-white/10">
+                        {currentIndex + 1} / {screenshots.length}
                     </div>
-                )
-            }
+                </div>,
+                document.body
+            )}
         </>
     );
 }
