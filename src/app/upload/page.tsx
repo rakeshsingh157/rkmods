@@ -87,10 +87,27 @@ export default function AdminPage() {
 
             if (res.ok) {
                 if (editingApp) {
+                    // Clear all form fields and state
                     setEditingApp(null);
+                    setFileUrl('');
+                    setIconUrl('');
+                    setFileSize('');
+                    setScreenshots([]);
+                    
+                    // Reset form fields
+                    e.currentTarget.reset();
+                    
                     fetchApps();
+                    setActiveTab('manage');
                     alert('App updated successfully!');
                 } else {
+                    // Clear form for new uploads
+                    setFileUrl('');
+                    setIconUrl('');
+                    setFileSize('');
+                    setScreenshots([]);
+                    e.currentTarget.reset();
+                    
                     router.push('/');
                     router.refresh();
                 }
