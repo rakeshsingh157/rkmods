@@ -247,6 +247,13 @@ export default function AdminPage() {
                             </div>
                         )}
 
+                            {error && (
+                            <div className="bg-red-500/10 text-red-400 p-4 rounded-xl mb-8 flex items-center gap-3 text-sm font-bold border border-red-500/20 animate-pulse">
+                                <AlertCircle className="w-5 h-5" />
+                                {error}
+                            </div>
+                        )}
+
                         <form onSubmit={handleSubmit} className="space-y-8">
                             <div className="space-y-6">
                                 <div className="group">
@@ -436,6 +443,7 @@ export default function AdminPage() {
                                 )}
                             </button>
                         </form>
+                        </div>
                     </div>
                 ) : (
                     <div className="bg-[#131b2e] rounded-3xl shadow-2xl border border-white/5 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
