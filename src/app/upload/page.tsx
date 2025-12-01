@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import { Upload, AlertCircle, CheckCircle, Shield, Lock, Edit, Trash2, X, Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -9,6 +9,7 @@ import UploadcareWidget from '@/components/UploadcareWidget';
 
 export default function AdminPage() {
     const router = useRouter();
+    const formRef = useRef<HTMLFormElement>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [fileUrl, setFileUrl] = useState('');
@@ -94,10 +95,12 @@ export default function AdminPage() {
                     setFileSize('');
                     setScreenshots([]);
                     
-                    // Reset form fields
-                    e.currentTarget.reset();
+                    // Reset form fields using ref
+                    if (formRef.current) {
+                        formRef.current.reset();
+                    }
                     
-                    fetchApps();
+                    await fetchApps();
                     setActiveTab('manage');
                     alert('App updated successfully!');
                 } else {
@@ -106,7 +109,10 @@ export default function AdminPage() {
                     setIconUrl('');
                     setFileSize('');
                     setScreenshots([]);
-                    e.currentTarget.reset();
+                    
+                    if (formRef.current) {
+                        formRef.current.reset();
+                    }
                     
                     router.push('/');
                     router.refresh();
@@ -116,8 +122,8 @@ export default function AdminPage() {
                 setError(data.error || 'Operation failed');
             }
         } catch (err) {
-            console.error(err);
-            setError('Error processing request');
+            console.error('Submit error:', err);
+            setError(err instanceof Error ? err.message : 'Error processing request');
         } finally {
             setLoading(false);
         }
@@ -271,7 +277,7 @@ export default function AdminPage() {
                             </div>
                         )}
 
-                        <form onSubmit={handleSubmit} className="space-y-8">
+                        <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
                             <div className="space-y-6">
                                 <div className="group">
                                     <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
