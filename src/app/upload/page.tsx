@@ -187,38 +187,58 @@ export default function AdminPage() {
     }
 
     return (
-        <main className="min-h-screen bg-[#0b0f19] font-sans selection:bg-cyan-500 selection:text-white">
+        <main className="min-h-screen bg-[#0b0f19] font-sans selection:bg-cyan-500 selection:text-white relative overflow-hidden">
+            {/* Animated Background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-500/5 animate-pulse"></div>
+            <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+            
             <Navbar />
-            <div className="container mx-auto py-32 px-4 max-w-4xl">
+            <div className="container mx-auto py-24 md:py-32 px-4 max-w-5xl relative z-10">
+                {/* Header */}
+                <div className="text-center mb-12 animate-in fade-in slide-in-from-top-4 duration-700">
+                    <h1 className="text-4xl md:text-5xl font-black text-white mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                        Mod Management
+                    </h1>
+                    <p className="text-gray-400 text-lg">Upload and manage your Android mods</p>
+                </div>
 
                 {/* Tabs */}
-                <div className="flex gap-4 mb-8">
+                <div className="flex gap-3 mb-10 p-2 bg-[#131b2e] rounded-2xl border border-white/5 animate-in fade-in slide-in-from-top-6 duration-700">
                     <button
                         onClick={() => { setActiveTab('upload'); setEditingApp(null); setFileUrl(''); setIconUrl(''); setFileSize(''); }}
-                        className={`flex-1 py-4 rounded-2xl font-bold text-lg transition flex items-center justify-center gap-2 ${activeTab === 'upload' ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20' : 'bg-[#131b2e] text-gray-400 border border-white/5 hover:bg-white/5'}`}
+                        className={`flex-1 py-4 rounded-xl font-bold text-base md:text-lg transition-all duration-300 flex items-center justify-center gap-2 ${activeTab === 'upload' ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30 scale-105' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
                     >
                         <Upload className="w-5 h-5" />
-                        {editingApp ? 'Edit App' : 'Upload New'}
+                        <span className="hidden sm:inline">{editingApp ? 'Edit App' : 'Upload New'}</span>
+                        <span className="sm:hidden">Upload</span>
                     </button>
                     <button
                         onClick={() => setActiveTab('manage')}
-                        className={`flex-1 py-4 rounded-2xl font-bold text-lg transition flex items-center justify-center gap-2 ${activeTab === 'manage' ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20' : 'bg-[#131b2e] text-gray-400 border border-white/5 hover:bg-white/5'}`}
+                        className={`flex-1 py-4 rounded-xl font-bold text-base md:text-lg transition-all duration-300 flex items-center justify-center gap-2 ${activeTab === 'manage' ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30 scale-105' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
                     >
                         <Edit className="w-5 h-5" />
-                        Manage Apps
+                        <span className="hidden sm:inline">Manage Apps</span>
+                        <span className="sm:hidden">Manage</span>
                     </button>
                 </div>
 
                 {activeTab === 'upload' ? (
-                    <div className="bg-[#131b2e] p-8 md:p-10 rounded-3xl shadow-2xl border border-white/5 relative overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-300">
-                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-600"></div>
+                    <div className="bg-gradient-to-br from-[#131b2e] to-[#0f1623] p-6 md:p-10 rounded-3xl shadow-2xl border border-white/10 relative overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-500 backdrop-blur-xl">
+                        {/* Animated top border */}
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 animate-gradient"></div>
+                        <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl"></div>
+                        <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl"></div>
 
-                        <h1 className="text-3xl font-black mb-8 flex items-center gap-4 text-white">
-                            <div className="p-3 bg-cyan-500/10 rounded-2xl text-cyan-400 border border-cyan-500/20">
-                                {editingApp ? <Edit className="w-8 h-8" /> : <Upload className="w-8 h-8" />}
-                            </div>
-                            {editingApp ? `Edit ${editingApp.name}` : 'Upload New Mod'}
-                        </h1>
+                        <div className="relative z-10">
+                            <h1 className="text-2xl md:text-3xl font-black mb-8 flex items-center gap-3 md:gap-4 text-white">
+                                <div className="p-2 md:p-3 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl text-cyan-400 border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
+                                    {editingApp ? <Edit className="w-6 h-6 md:w-8 md:h-8" /> : <Upload className="w-6 h-6 md:w-8 md:h-8" />}
+                                </div>
+                                <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                                    {editingApp ? `Edit ${editingApp.name}` : 'Upload New Mod'}
+                                </span>
+                            </h1>
 
                         {error && (
                             <div className="bg-red-500/10 text-red-400 p-4 rounded-xl mb-8 flex items-center gap-3 text-sm font-bold border border-red-500/20 animate-pulse">
@@ -229,15 +249,21 @@ export default function AdminPage() {
 
                         <form onSubmit={handleSubmit} className="space-y-8">
                             <div className="space-y-6">
-                                <div>
-                                    <label className="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wide">App Name</label>
-                                    <input name="name" defaultValue={editingApp?.name} required className="w-full bg-[#0b0f19] border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 outline-none transition" placeholder="e.g. Super Game Mod" />
+                                <div className="group">
+                                    <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
+                                        <div className="w-1 h-4 bg-cyan-500 rounded"></div>
+                                        App Name
+                                    </label>
+                                    <input name="name" defaultValue={editingApp?.name} required className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30" placeholder="e.g. Super Game Mod" />
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wide">Category</label>
-                                        <select name="category" defaultValue={editingApp?.category} className="w-full bg-[#0b0f19] border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 outline-none transition appearance-none">
+                                    <div className="group">
+                                        <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
+                                            <div className="w-1 h-4 bg-blue-500 rounded"></div>
+                                            Category
+                                        </label>
+                                        <select name="category" defaultValue={editingApp?.category} className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30 appearance-none cursor-pointer">
                                             <option>Games</option>
                                             <option>Productivity</option>
                                             <option>Social</option>
@@ -245,15 +271,21 @@ export default function AdminPage() {
                                             <option>Entertainment</option>
                                         </select>
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wide">Version</label>
-                                        <input name="version" defaultValue={editingApp?.version} placeholder="1.0.0" className="w-full bg-[#0b0f19] border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 outline-none transition" />
+                                    <div className="group">
+                                        <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
+                                            <div className="w-1 h-4 bg-purple-500 rounded"></div>
+                                            Version
+                                        </label>
+                                        <input name="version" defaultValue={editingApp?.version} placeholder="1.0.0" className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30" />
                                     </div>
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-bold text-gray-400 mb-2 uppercase tracking-wide">Description</label>
-                                    <textarea name="description" defaultValue={editingApp?.description} rows={4} className="w-full bg-[#0b0f19] border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 outline-none transition" placeholder="Describe your mod features..."></textarea>
+                                <div className="group">
+                                    <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
+                                        <div className="w-1 h-4 bg-green-500 rounded"></div>
+                                        Description
+                                    </label>
+                                    <textarea name="description" defaultValue={editingApp?.description} rows={4} className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30 resize-none" placeholder="Describe your mod features..."></textarea>
                                 </div>
                             </div>
 
@@ -464,6 +496,15 @@ export default function AdminPage() {
                 )}
             </div>
             <style jsx global>{`
+                @keyframes gradient {
+                    0% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                    100% { background-position: 0% 50%; }
+                }
+                .animate-gradient {
+                    background-size: 200% 200%;
+                    animation: gradient 3s ease infinite;
+                }
                 .uploadcare--widget__button_type_open {
                     background-color: rgba(6, 182, 212, 0.1) !important;
                     color: #22d3ee !important;
