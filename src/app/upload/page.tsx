@@ -40,7 +40,9 @@ export default function AdminPage() {
 
     async function fetchApps() {
         try {
-            const res = await fetch('/api/apps');
+            const res = await fetch('/api/apps', {
+                cache: 'no-store'
+            });
             const data = await res.json();
             if (Array.isArray(data)) {
                 setApps(data);
@@ -94,12 +96,12 @@ export default function AdminPage() {
                     setIconUrl('');
                     setFileSize('');
                     setScreenshots([]);
-                    
+
                     // Reset form fields using ref
                     if (formRef.current) {
                         formRef.current.reset();
                     }
-                    
+
                     await fetchApps();
                     setActiveTab('manage');
                     alert('App updated successfully!');
@@ -109,11 +111,11 @@ export default function AdminPage() {
                     setIconUrl('');
                     setFileSize('');
                     setScreenshots([]);
-                    
+
                     if (formRef.current) {
                         formRef.current.reset();
                     }
-                    
+
                     router.push('/');
                     router.refresh();
                 }
@@ -213,9 +215,9 @@ export default function AdminPage() {
         <main className="min-h-screen font-sans selection:bg-cyan-500 selection:text-white relative overflow-hidden">
             {/* Enhanced Animated Background Elements */}
             <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-            
+            <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+
             <Navbar />
             <div className="container mx-auto py-24 md:py-32 px-4 max-w-5xl relative z-10">
                 {/* Header */}
@@ -263,209 +265,209 @@ export default function AdminPage() {
                                 </span>
                             </h1>
 
-                        {error && (
-                            <div className="bg-red-500/10 text-red-400 p-4 rounded-xl mb-8 flex items-center gap-3 text-sm font-bold border border-red-500/20 animate-pulse">
-                                <AlertCircle className="w-5 h-5" />
-                                {error}
-                            </div>
-                        )}
+                            {error && (
+                                <div className="bg-red-500/10 text-red-400 p-4 rounded-xl mb-8 flex items-center gap-3 text-sm font-bold border border-red-500/20 animate-pulse">
+                                    <AlertCircle className="w-5 h-5" />
+                                    {error}
+                                </div>
+                            )}
 
                             {error && (
-                            <div className="bg-red-500/10 text-red-400 p-4 rounded-xl mb-8 flex items-center gap-3 text-sm font-bold border border-red-500/20 animate-pulse">
-                                <AlertCircle className="w-5 h-5" />
-                                {error}
-                            </div>
-                        )}
+                                <div className="bg-red-500/10 text-red-400 p-4 rounded-xl mb-8 flex items-center gap-3 text-sm font-bold border border-red-500/20 animate-pulse">
+                                    <AlertCircle className="w-5 h-5" />
+                                    {error}
+                                </div>
+                            )}
 
-                        <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
-                            <div className="space-y-6">
-                                <div className="group">
-                                    <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
-                                        <div className="w-1 h-4 bg-cyan-500 rounded"></div>
-                                        App Name
-                                    </label>
-                                    <input name="name" defaultValue={editingApp?.name} required className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30" placeholder="e.g. Super Game Mod" />
+                            <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
+                                <div className="space-y-6">
+                                    <div className="group">
+                                        <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
+                                            <div className="w-1 h-4 bg-cyan-500 rounded"></div>
+                                            App Name
+                                        </label>
+                                        <input name="name" defaultValue={editingApp?.name} required className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30" placeholder="e.g. Super Game Mod" />
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="group">
+                                            <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
+                                                <div className="w-1 h-4 bg-blue-500 rounded"></div>
+                                                Category
+                                            </label>
+                                            <select name="category" defaultValue={editingApp?.category} className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30 appearance-none cursor-pointer">
+                                                <option>Games</option>
+                                                <option>Productivity</option>
+                                                <option>Social</option>
+                                                <option>Tools</option>
+                                                <option>Entertainment</option>
+                                            </select>
+                                        </div>
+                                        <div className="group">
+                                            <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
+                                                <div className="w-1 h-4 bg-purple-500 rounded"></div>
+                                                Version
+                                            </label>
+                                            <input name="version" defaultValue={editingApp?.version} placeholder="1.0.0" className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30" />
+                                        </div>
+                                    </div>
+
+                                    <div className="group">
+                                        <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
+                                            <div className="w-1 h-4 bg-green-500 rounded"></div>
+                                            Description
+                                        </label>
+                                        <textarea name="description" defaultValue={editingApp?.description} rows={4} className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30 resize-none" placeholder="Describe your mod features..."></textarea>
+                                    </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="group">
-                                        <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
-                                            <div className="w-1 h-4 bg-blue-500 rounded"></div>
-                                            Category
-                                        </label>
-                                        <select name="category" defaultValue={editingApp?.category} className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30 appearance-none cursor-pointer">
-                                            <option>Games</option>
-                                            <option>Productivity</option>
-                                            <option>Social</option>
-                                            <option>Tools</option>
-                                            <option>Entertainment</option>
-                                        </select>
+                                    <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 text-center hover:bg-white/5 transition relative group">
+                                        <label className="block text-sm font-bold text-gray-400 mb-4 uppercase tracking-wide">App Icon</label>
+                                        <div className="uploadcare-wrapper">
+                                            <UploadcareWidget
+                                                publicKey="1eab7359b521f25ceb5a"
+                                                onChange={(info: any) => setIconUrl(info.cdnUrl || '')}
+                                                clearable
+                                                imagesOnly
+                                            />
+                                        </div>
+                                        {iconUrl && <div className="mt-4 text-sm text-green-400 flex items-center justify-center gap-2 font-bold"><CheckCircle className="w-4 h-4" /> Icon Uploaded</div>}
                                     </div>
-                                    <div className="group">
-                                        <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
-                                            <div className="w-1 h-4 bg-purple-500 rounded"></div>
-                                            Version
-                                        </label>
-                                        <input name="version" defaultValue={editingApp?.version} placeholder="1.0.0" className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30" />
+
+                                    <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 text-center hover:bg-white/5 transition relative group">
+                                        <label className="block text-sm font-bold text-gray-400 mb-4 uppercase tracking-wide">APK File</label>
+
+                                        {isDirectLink ? (
+                                            <div className="space-y-4">
+                                                <input
+                                                    type="url"
+                                                    placeholder="https://example.com/app.apk"
+                                                    value={fileUrl}
+                                                    onChange={(e) => setFileUrl(e.target.value)}
+                                                    className="w-full bg-[#0b0f19] border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 outline-none transition"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => { setIsDirectLink(false); setFileUrl(''); }}
+                                                    className="text-xs text-cyan-400 hover:text-cyan-300 underline"
+                                                >
+                                                    Upload File Instead
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <div className="space-y-4">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setIsUploadModalOpen(true)}
+                                                    className="w-full bg-cyan-500/10 text-cyan-400 py-4 rounded-xl font-bold border border-cyan-500/20 hover:bg-cyan-500/20 transition flex items-center justify-center gap-2"
+                                                >
+                                                    <Upload className="w-5 h-5" />
+                                                    {fileUrl ? 'Replace APK' : 'Upload APK'}
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => { setIsDirectLink(true); setFileUrl(''); }}
+                                                    className="text-xs text-cyan-400 hover:text-cyan-300 underline"
+                                                >
+                                                    Enter Direct Link Instead
+                                                </button>
+                                            </div>
+                                        )}
+
+                                        <input type="hidden" name="fileUrl" value={fileUrl} />
+                                        <input type="hidden" name="iconUrl" value={iconUrl} />
+                                        {(fileUrl || editingApp?.file_url) && <div className="mt-4 text-sm text-green-400 flex items-center justify-center gap-2 font-bold"><CheckCircle className="w-4 h-4" /> {isDirectLink ? 'Link Set' : `APK Set ${fileSize ? `(${fileSize})` : ''}`}</div>}
                                     </div>
                                 </div>
 
-                                <div className="group">
-                                    <label className="block text-sm font-bold text-gray-400 mb-3 uppercase tracking-wide flex items-center gap-2">
-                                        <div className="w-1 h-4 bg-green-500 rounded"></div>
-                                        Description
-                                    </label>
-                                    <textarea name="description" defaultValue={editingApp?.description} rows={4} className="w-full bg-[#0b0f19]/50 border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500 focus:bg-[#0b0f19] outline-none transition-all duration-300 hover:border-cyan-500/30 resize-none" placeholder="Describe your mod features..."></textarea>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 text-center hover:bg-white/5 transition relative group">
-                                    <label className="block text-sm font-bold text-gray-400 mb-4 uppercase tracking-wide">App Icon</label>
-                                    <div className="uploadcare-wrapper">
+                                {/* Screenshots Section */}
+                                <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 hover:bg-white/5 transition relative group">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <label className="block text-sm font-bold text-gray-400 uppercase tracking-wide">Screenshots (Optional)</label>
+                                        <span className="text-xs text-gray-500 font-medium">Select multiple images at once (up to 10)</span>
+                                    </div>
+                                    <div className="uploadcare-wrapper mb-4">
                                         <UploadcareWidget
                                             publicKey="1eab7359b521f25ceb5a"
-                                            onChange={(info: any) => setIconUrl(info.cdnUrl || '')}
+                                            onChange={(info: any) => {
+                                                console.log('Screenshot upload info:', info);
+
+                                                if (info.count) {
+                                                    // Multiple files (Group)
+                                                    const groupUrl = info.cdnUrl;
+                                                    if (groupUrl) {
+                                                        const newUrls: string[] = [];
+                                                        for (let i = 0; i < info.count; i++) {
+                                                            const baseUrl = groupUrl.endsWith('/') ? groupUrl : groupUrl + '/';
+                                                            newUrls.push(`${baseUrl}nth/${i}/`);
+                                                        }
+                                                        console.log('Generated group URLs:', newUrls);
+                                                        setScreenshots(newUrls);
+                                                    }
+                                                } else if (info.cdnUrl) {
+                                                    // Single file
+                                                    console.log('Single file URL:', info.cdnUrl);
+                                                    if (!screenshots.includes(info.cdnUrl)) {
+                                                        setScreenshots(prev => [...prev, info.cdnUrl]);
+                                                    }
+                                                }
+                                            }}
                                             clearable
                                             imagesOnly
+                                            multiple
                                         />
                                     </div>
-                                    {iconUrl && <div className="mt-4 text-sm text-green-400 flex items-center justify-center gap-2 font-bold"><CheckCircle className="w-4 h-4" /> Icon Uploaded</div>}
-                                </div>
 
-                                <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 text-center hover:bg-white/5 transition relative group">
-                                    <label className="block text-sm font-bold text-gray-400 mb-4 uppercase tracking-wide">APK File</label>
-
-                                    {isDirectLink ? (
-                                        <div className="space-y-4">
-                                            <input
-                                                type="url"
-                                                placeholder="https://example.com/app.apk"
-                                                value={fileUrl}
-                                                onChange={(e) => setFileUrl(e.target.value)}
-                                                className="w-full bg-[#0b0f19] border border-white/10 rounded-xl p-4 text-white focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 outline-none transition"
-                                            />
+                                    {screenshots.length > 0 && (
+                                        <div className="space-y-3">
+                                            <div className="text-sm text-green-400 flex items-center gap-2 font-bold">
+                                                <CheckCircle className="w-4 h-4" /> {screenshots.length} Screenshot{screenshots.length > 1 ? 's' : ''} Added
+                                            </div>
+                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                                {screenshots.map((url, index) => (
+                                                    <div key={index} className="relative group/img">
+                                                        <img src={url} alt={`Screenshot ${index + 1}`} className="w-full h-24 object-cover rounded-lg border border-white/10" />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setScreenshots(screenshots.filter((_, i) => i !== index))}
+                                                            className="absolute top-1 right-1 bg-red-500 text-white p-1.5 rounded-full opacity-0 group-hover/img:opacity-100 transition hover:bg-red-600"
+                                                            title="Remove screenshot"
+                                                        >
+                                                            <X className="w-3 h-3" />
+                                                        </button>
+                                                        <div className="absolute bottom-1 left-1 bg-black/60 text-white text-xs px-2 py-0.5 rounded">
+                                                            {index + 1}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
                                             <button
                                                 type="button"
-                                                onClick={() => { setIsDirectLink(false); setFileUrl(''); }}
-                                                className="text-xs text-cyan-400 hover:text-cyan-300 underline"
+                                                onClick={() => setScreenshots([])}
+                                                className="text-xs text-red-400 hover:text-red-300 underline"
                                             >
-                                                Upload File Instead
-                                            </button>
-                                        </div>
-                                    ) : (
-                                        <div className="space-y-4">
-                                            <button
-                                                type="button"
-                                                onClick={() => setIsUploadModalOpen(true)}
-                                                className="w-full bg-cyan-500/10 text-cyan-400 py-4 rounded-xl font-bold border border-cyan-500/20 hover:bg-cyan-500/20 transition flex items-center justify-center gap-2"
-                                            >
-                                                <Upload className="w-5 h-5" />
-                                                {fileUrl ? 'Replace APK' : 'Upload APK'}
-                                            </button>
-                                            <button
-                                                type="button"
-                                                onClick={() => { setIsDirectLink(true); setFileUrl(''); }}
-                                                className="text-xs text-cyan-400 hover:text-cyan-300 underline"
-                                            >
-                                                Enter Direct Link Instead
+                                                Clear all screenshots
                                             </button>
                                         </div>
                                     )}
-
-                                    <input type="hidden" name="fileUrl" value={fileUrl} />
-                                    <input type="hidden" name="iconUrl" value={iconUrl} />
-                                    {(fileUrl || editingApp?.file_url) && <div className="mt-4 text-sm text-green-400 flex items-center justify-center gap-2 font-bold"><CheckCircle className="w-4 h-4" /> {isDirectLink ? 'Link Set' : `APK Set ${fileSize ? `(${fileSize})` : ''}`}</div>}
-                                </div>
-                            </div>
-
-                            {/* Screenshots Section */}
-                            <div className="border-2 border-dashed border-white/10 rounded-2xl p-8 hover:bg-white/5 transition relative group">
-                                <div className="flex items-center justify-between mb-4">
-                                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-wide">Screenshots (Optional)</label>
-                                    <span className="text-xs text-gray-500 font-medium">Select multiple images at once (up to 10)</span>
-                                </div>
-                                <div className="uploadcare-wrapper mb-4">
-                                    <UploadcareWidget
-                                        publicKey="1eab7359b521f25ceb5a"
-                                        onChange={(info: any) => {
-                                            console.log('Screenshot upload info:', info);
-
-                                            if (info.count) {
-                                                // Multiple files (Group)
-                                                const groupUrl = info.cdnUrl;
-                                                if (groupUrl) {
-                                                    const newUrls: string[] = [];
-                                                    for (let i = 0; i < info.count; i++) {
-                                                        const baseUrl = groupUrl.endsWith('/') ? groupUrl : groupUrl + '/';
-                                                        newUrls.push(`${baseUrl}nth/${i}/`);
-                                                    }
-                                                    console.log('Generated group URLs:', newUrls);
-                                                    setScreenshots(newUrls);
-                                                }
-                                            } else if (info.cdnUrl) {
-                                                // Single file
-                                                console.log('Single file URL:', info.cdnUrl);
-                                                if (!screenshots.includes(info.cdnUrl)) {
-                                                    setScreenshots(prev => [...prev, info.cdnUrl]);
-                                                }
-                                            }
-                                        }}
-                                        clearable
-                                        imagesOnly
-                                        multiple
-                                    />
                                 </div>
 
-                                {screenshots.length > 0 && (
-                                    <div className="space-y-3">
-                                        <div className="text-sm text-green-400 flex items-center gap-2 font-bold">
-                                            <CheckCircle className="w-4 h-4" /> {screenshots.length} Screenshot{screenshots.length > 1 ? 's' : ''} Added
-                                        </div>
-                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                            {screenshots.map((url, index) => (
-                                                <div key={index} className="relative group/img">
-                                                    <img src={url} alt={`Screenshot ${index + 1}`} className="w-full h-24 object-cover rounded-lg border border-white/10" />
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => setScreenshots(screenshots.filter((_, i) => i !== index))}
-                                                        className="absolute top-1 right-1 bg-red-500 text-white p-1.5 rounded-full opacity-0 group-hover/img:opacity-100 transition hover:bg-red-600"
-                                                        title="Remove screenshot"
-                                                    >
-                                                        <X className="w-3 h-3" />
-                                                    </button>
-                                                    <div className="absolute bottom-1 left-1 bg-black/60 text-white text-xs px-2 py-0.5 rounded">
-                                                        {index + 1}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <button
-                                            type="button"
-                                            onClick={() => setScreenshots([])}
-                                            className="text-xs text-red-400 hover:text-red-300 underline"
-                                        >
-                                            Clear all screenshots
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-cyan-500/25 transition disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
-                            >
-                                {loading ? (
-                                    'Processing...'
-                                ) : (
-                                    <>
-                                        <Shield className="w-5 h-5" />
-                                        {editingApp ? 'Update Mod' : 'Publish Mod'}
-                                    </>
-                                )}
-                            </button>
-                        </form>
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-cyan-500/25 transition disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                                >
+                                    {loading ? (
+                                        'Processing...'
+                                    ) : (
+                                        <>
+                                            <Shield className="w-5 h-5" />
+                                            {editingApp ? 'Update Mod' : 'Publish Mod'}
+                                        </>
+                                    )}
+                                </button>
+                            </form>
                         </div>
                     </div>
                 ) : (
