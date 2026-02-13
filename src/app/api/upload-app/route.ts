@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import pool from '@/lib/db';
 
 export async function POST(request: Request) {
@@ -32,6 +33,10 @@ export async function POST(request: Request) {
         console.log('Inserting with screenshots:', screenshots);
         const result = await pool.query(query, values);
         console.log('Inserted app:', result.rows[0]);
+
+        // Revalidate pages to show new app immediately
+        revalidatePath('/');
+        revalidatePath('/trending');
 
         return NextResponse.json({ success: true, app: result.rows[0] });
     } catch (error) {

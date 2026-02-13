@@ -3,6 +3,8 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { Download, Star, ChevronRight, Zap, Trophy, Smartphone, Flame, Gamepad2 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 async function getApps() {
   try {
     const res = await pool.query('SELECT * FROM apps ORDER BY created_at DESC');

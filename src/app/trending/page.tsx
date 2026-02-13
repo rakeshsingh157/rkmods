@@ -3,6 +3,8 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { TrendingUp, Star, Download, Flame } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 async function getTrendingApps() {
     try {
         const res = await pool.query('SELECT * FROM apps ORDER BY created_at DESC LIMIT 10');

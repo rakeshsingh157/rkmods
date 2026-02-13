@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import pool from '@/lib/db';
 
 export async function PUT(request: Request) {
@@ -35,6 +36,11 @@ export async function PUT(request: Request) {
         if (result.rows.length === 0) {
             return NextResponse.json({ error: 'App not found' }, { status: 404 });
         }
+
+        // Revalidate pages to show updated app immediately
+        revalidatePath('/');
+        revalidatePath('/trending');
+        revalidatePath(`/app/${id}`);
 
         return NextResponse.json({ success: true, app: result.rows[0] });
     } catch (error) {

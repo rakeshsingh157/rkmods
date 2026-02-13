@@ -10,6 +10,8 @@ import InstallationGuide from '@/components/InstallationGuide';
 import RatingBreakdown from '@/components/RatingBreakdown';
 import DynamicBackground from '@/components/DynamicBackground';
 
+export const dynamic = 'force-dynamic';
+
 async function getApp(id: string) {
     try {
         const res = await pool.query('SELECT * FROM apps WHERE id = $1', [id]);
@@ -74,7 +76,7 @@ export default async function AppPage({ params }: { params: Promise<{ id: string
         <main className="min-h-screen font-sans text-gray-200 selection:bg-cyan-500 selection:text-white relative overflow-hidden">
             {/* Animated Background Elements */}
             {app.icon_url && <DynamicBackground iconUrl={app.icon_url} />}
-            
+
             <Navbar />
 
             {/* Header / Banner */}
@@ -82,7 +84,7 @@ export default async function AppPage({ params }: { params: Promise<{ id: string
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-cyan-900/10 via-purple-900/5 to-transparent -z-10"></div>
                 <div className="container mx-auto px-4 md:px-6 relative z-10">
                     <Link href="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-6 md:mb-8 transition group">
-                        <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-x-1 transition" /> 
+                        <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-x-1 transition" />
                         <span className="text-sm md:text-base">Back to Home</span>
                     </Link>
 

@@ -3,6 +3,8 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { Download, Search as SearchIcon } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 async function searchApps(query: string) {
     if (!query) return [];
     try {
