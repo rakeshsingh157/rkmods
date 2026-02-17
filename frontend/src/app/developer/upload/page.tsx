@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Upload, AlertCircle, CheckCircle, Shield, X, ArrowRight, ArrowLeft, Sparkles, Clock, CheckCircle2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import UploadModal from '@/components/UploadModal';
 import UploadcareWidget from '@/components/UploadcareWidget';
 import { authFetch } from '@/lib/api';
@@ -157,7 +158,7 @@ function UploadWizard() {
             });
 
             if (res.ok) {
-                alert(editId ? 'App updated!' : 'App submitted!');
+                toast.success(editId ? 'App updated!' : 'App submitted!');
                 router.push('/developer/apps');
             } else {
                 const data = await res.json();
