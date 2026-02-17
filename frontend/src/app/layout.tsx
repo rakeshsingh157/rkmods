@@ -16,7 +16,7 @@ export default function RootLayout({
       <body>
         {children}
         <Toaster
-          position="top-right"
+          position="top-center"
           toastOptions={{
             style: {
               background: '#131b2e',

@@ -158,7 +158,20 @@ function UploadWizard() {
             });
 
             if (res.ok) {
-                toast.success(editId ? 'App updated!' : 'App submitted!');
+                toast.success(editId ? 'App updated!' : 'App submitted!', {
+                    icon: (
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+                            <Sparkles className="w-5 h-5" />
+                        </div>
+                    ),
+                    style: {
+                        borderRadius: '16px',
+                        background: '#131b2e',
+                        color: '#fff',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        padding: '16px',
+                    },
+                });
                 router.push('/developer/apps');
             } else {
                 const data = await res.json();
