@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uploadcare Test</title>
+    <link rel="stylesheet" href="https://ucarecdn.com/libs/widget/3.x/uploadcare.min.css" />
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+</head>
+<body>
+    <h1>Test Uploadcare Widget</h1>
+    
+    <h2>Single File Upload</h2>
+    <input type="hidden" role="uploadcare-uploader" name="icon" 
+           data-public-key="1eab7359b521f25ceb5a"
+           data-images-only="true" />
+    
+    <h2>Multiple File Upload</h2>
+    <input type="hidden" role="uploadcare-uploader" name="screenshots" 
+           data-public-key="1eab7359b521f25ceb5a"
+           data-images-only="true"
+           data-multiple="true"
+           data-multiple-max="10" />
+    
+    <script>
+        console.log('Page loaded, uploadcare:', typeof uploadcare);
+        
+        // Test single upload
+        const iconWidget = uploadcare.Widget('[name="icon"]');
+        iconWidget.onUploadComplete((info) => {
+            console.log('Icon upload complete:', info);
+            console.log('CDN URL:', info.cdnUrl);
+        });
+        
+        // Test multiple upload
+        const screenshotsWidget = uploadcare.Widget('[name="screenshots"]');
+        screenshotsWidget.onUploadComplete((info) => {
+            console.log('Screenshots upload complete:', info);
+            console.log('Count:', info.count);
+            
+            if (info.count && info.count > 1) {
+                console.log('Multiple files detected!');
+                const files = info.files();
+                files.forEach((file, i) => {
+                    console.log(`File ${i}:`, file.cdnUrl);
+                });
+            } else {
+                console.log('Single file:', info.cdnUrl);
+            }
+        });
+        
+        console.log('Widgets initialized');
+    </script>
+</body>
+</html>
