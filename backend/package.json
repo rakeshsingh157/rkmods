@@ -7,6 +7,7 @@
     "scripts": {
         "dev": "node -r dotenv/config --watch src/server.js",
         "start": "node -r dotenv/config src/server.js",
+        "build": "echo 'No build step required'",
         "migrate": "node scripts/migrate-secure-schema.js"
     },
     "dependencies": {
