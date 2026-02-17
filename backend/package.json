@@ -1,0 +1,33 @@
+{
+    "name": "rkmods-backend",
+    "version": "1.0.0",
+    "description": "Backend API server for RKMODS App Store",
+    "main": "src/server.js",
+    "type": "module",
+    "scripts": {
+        "dev": "node -r dotenv/config --watch src/server.js",
+        "start": "node -r dotenv/config src/server.js",
+        "migrate": "node scripts/migrate-secure-schema.js"
+    },
+    "dependencies": {
+        "bcrypt": "^5.1.1",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.18.2",
+        "express-rate-limit": "^7.1.5",
+        "helmet": "^7.1.0",
+        "hpp": "^0.2.3",
+        "jsonwebtoken": "^9.0.2",
+        "mongodb": "^7.1.0",
+        "nodemailer": "^6.9.8",
+        "pg": "^8.18.0",
+        "socket.io": "^4.8.3",
+        "uuid": "^9.0.1",
+        "validator": "^13.11.0",
+        "xss-clean": "^0.1.4"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.2"
+    }
+}
