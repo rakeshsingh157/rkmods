@@ -47,7 +47,7 @@ export default async function Home() {
             <div className="lg:w-1/2 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-1.5 rounded-full text-sm font-semibold text-cyan-400 mb-8 shadow-lg shadow-cyan-500/10">
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-                The Ultimate Mod Store
+                The Ultimate App Store
               </div>
 
               <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight leading-[1.1]">
@@ -56,14 +56,14 @@ export default async function Home() {
               </h1>
 
               <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Download premium mods, unlocked apps, and exclusive games. No ads, no limits, just pure performance.
+                Download premium apps, unlocked features, and exclusive games. No ads, no limits, just pure performance.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
                 <Link href="/trending" className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-cyan-500/25 transition transform hover:-translate-y-1">
                   <div className="flex items-center justify-center gap-2">
                     <Flame className="w-5 h-5" />
-                    Hot Mods
+                    Hot Apps
                   </div>
                 </Link>
                 <Link href="/categories" className="w-full sm:w-auto px-8 py-4 bg-white/5 text-white rounded-xl font-bold text-lg hover:bg-white/10 transition border border-white/10 backdrop-blur-sm">
@@ -114,7 +114,7 @@ export default async function Home() {
           <div>
             <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
               <span className="w-1 h-8 bg-cyan-500 rounded-full"></span>
-              Featured Mods
+              Featured Apps
             </h2>
             <p className="text-gray-400 font-medium ml-4">Hand-picked for you today</p>
           </div>
@@ -165,14 +165,14 @@ export default async function Home() {
             <div className="bg-[#0b0f19] w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-black/50 border border-white/5">
               <Gamepad2 className="w-10 h-10 text-gray-600" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">No mods found</h3>
-            <p className="text-gray-400">Upload your first mod to get started!</p>
+            <h3 className="text-xl font-bold text-white mb-2">No apps found</h3>
+            <p className="text-gray-400">Upload your first app to get started!</p>
           </div>
         )}
 
         <div className="mt-12 text-center md:hidden">
           <Link href="/trending" className="inline-flex items-center gap-2 text-cyan-400 font-bold bg-cyan-500/10 px-6 py-3 rounded-xl w-full justify-center">
-            See All Mods <ChevronRight className="w-5 h-5" />
+            See All Apps <ChevronRight className="w-5 h-5" />
           </Link>
         </div>
       </div>

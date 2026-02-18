@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import CursorEffect from "@/components/CursorEffect";
 
+import Footer from "@/components/Footer";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -10,7 +12,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "RKMODS - Premium App Store",
-  description: "Download the latest mods and premium apps.",
+  description: "Download the latest premium apps and games.",
 };
 
 export default function RootLayout({
@@ -26,6 +28,7 @@ export default function RootLayout({
       >
         <CursorEffect />
         {children}
+        <Footer />
       </body>
     </html>
   );

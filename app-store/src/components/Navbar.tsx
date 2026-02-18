@@ -57,7 +57,7 @@ export default function Navbar() {
                         <Search className="text-gray-400 w-4 h-4" />
                         <input
                             type="text"
-                            placeholder="Search mods, apps, games..."
+                            placeholder="Search apps, games, tools..."
                             className="bg-transparent border-none outline-none ml-3 w-full text-sm font-medium text-gray-200 placeholder-gray-500"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
